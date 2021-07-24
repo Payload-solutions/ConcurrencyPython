@@ -83,10 +83,37 @@ def math_matrix():
     print(matrix)
     print(matrix.T)
 
+
+def multipling_vectors():
+    
+    # when a matrix transpose has the same size of elements 
+    # in both columns then its can be added each to one
+
+
+    escalar = 5.679
+    vector = np.array([1,2,3])
+    matrix = np.array([[1,2],[3,4],[6,7]])
+    tensor = np.array([
+        [[1,2,3],[4,5,6],[6,7,8]],
+        [[11,12,13],[14,15,16],[17,18,19]],
+        [[21,22,23],[24,25,26],[27,28,29]]
+    ])
+
+    print(matrix)
+
+
+    print(matrix.T  + vector)
+
+
+
 def main():
     # math_process()
     # shape_forming()
-    math_matrix()
+    # math_matrix()
+    multipling_vectors()
+
+
+
 
 if __name__ == "__main__":
     main()
