@@ -6,4 +6,7 @@ import random
 counter = 1
 
 def worker_a():
-    pass
+    global counter
+    while  counter < 1000:
+        counter += 1s
+
