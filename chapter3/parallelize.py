@@ -3,10 +3,11 @@
 import threading
 import time
 import random
+
 counter = 1
+
 
 def worker_a():
     global counter
-    while  counter < 1000:
-        counter += 1s
-
+    while counter < 1000:
+        counter += 1
