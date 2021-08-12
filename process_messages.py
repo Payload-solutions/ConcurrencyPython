@@ -13,7 +13,7 @@ import numpy as np
 
 
 lock = Lock()
-
+print("Esta es la cantidad de cpu's que tengo {}".format(cpu_count()))
 
 def add_one(shr_name):
 
@@ -22,6 +22,9 @@ def add_one(shr_name):
     lock.acquire()
     np_array[:] = np_array[0] + 1
     lock.release()
+    # time.sleep(5)
+    print("Este es el proceso actual: ", current_process().name)
+    time.sleep(3)
     print(os.getpid())
     time.sleep(3)
     print("Added one")
@@ -30,7 +33,7 @@ def add_one(shr_name):
 def create_shared_block():
 
     a= np.ones(shape=(5000, 5000), dtype=np.int64) # start with an existing numpy
-    
+
     shm = shared_memory.SharedMemory(create=True, size=a.nbytes)
     np_array = np.ndarray(a.shape, dtype=np.int64, buffer=shm.buf)
     np_array[:] = a[:]
@@ -54,7 +57,7 @@ def main():
 
         for _process in processes:
             _process.join()
-        
+
         print("Final array")
         print(np_array[:10])
         print(np_array[10:])

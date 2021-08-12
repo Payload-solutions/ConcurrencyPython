@@ -18,9 +18,9 @@ URLS = [
 
 
 def fetch_single(url: str) -> None:
-    
+
     print("Fetching url: {}".format(url))
-    
+
     requests.get(url)
     time.sleep(0.05)
     print(os.getpid())
@@ -28,12 +28,13 @@ def fetch_single(url: str) -> None:
 
 if __name__ == "__main__":
     time_start = time.time()
-    
+
     with concurrent.futures.ProcessPoolExecutor() as ppe:
         for url in URLS:
             ppe.submit(fetch_single, url)
-    
+
 
     time_end = time.time()
-    
+
     print("All done! Took {}".format(round(time_end - time_start, 2)))
+
