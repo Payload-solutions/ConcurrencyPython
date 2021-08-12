@@ -10,7 +10,7 @@ from multiprocessing import (
 )
 import time
 import numpy as np
-
+from random import randint
 
 lock = Lock()
 print("Esta es la cantidad de cpu's que tengo {}".format(cpu_count()))
@@ -23,7 +23,7 @@ def add_one(shr_name):
     np_array[:] = np_array[0] + 1
     lock.release()
     # time.sleep(5)
-    print("Este es el proceso actual: ", current_process().name)
+    print("Este es el procesador actual: ", current_process().name)
     time.sleep(3)
     print(os.getpid())
     time.sleep(3)
@@ -32,6 +32,8 @@ def add_one(shr_name):
 
 def create_shared_block():
 
+    list_vals = [randint(1, 25) for _ in range(10)]
+    print(list_vals)
     a= np.ones(shape=(5000, 5000), dtype=np.int64) # start with an existing numpy
 
     shm = shared_memory.SharedMemory(create=True, size=a.nbytes)
@@ -41,7 +43,6 @@ def create_shared_block():
 
 
 def main():
-
 
     if current_process().name == "MainProcess":
         print("Creating shared block")
