@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/python
 
 import os
 from multiprocessing import (
@@ -36,6 +36,8 @@ def create_shared_block():
     print(list_vals)
     a= np.ones(shape=(5000, 5000), dtype=np.int64) # start with an existing numpy
 
+    # a.bytes is integer type
+    # here indicate to SharedMenory class, how much is the size to pass
     shm = shared_memory.SharedMemory(create=True, size=a.nbytes)
     np_array = np.ndarray(a.shape, dtype=np.int64, buffer=shm.buf)
     np_array[:] = a[:]
@@ -50,7 +52,7 @@ def main():
 
         processes = list()
 
-        for i in range(cpu_count()):
+        for _ in range(cpu_count()):
             _process = Process(target=add_one, args=(shr.name, ))
             processes.append(_process)
             _process.start()
