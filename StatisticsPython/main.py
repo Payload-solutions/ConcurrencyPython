@@ -28,6 +28,7 @@ def fibonacci_dinamic(n: int, memo = {}) -> int:
         return 1
 
     try:
+
         return memo[n]
     except KeyError:
         result = fibonacci_dinamic(n - 1, memo) + fibonacci_dinamic(n - 2, memo)
