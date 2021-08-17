@@ -33,6 +33,10 @@ print("""
 def receive_message(shr_mem):
 
     memory_shared = shared_memory.SharedMemory(name=shr_mem)
+    lock.acquire()
+    
+    lock.release()
+    
 
 
 def send_message():
@@ -49,10 +53,11 @@ def main():
     if current_process().name == "MainProcess":
 
         processors = list()
-
+    
+        list_vals, memory_shared = send_message()
 
         for _ in range(cpu_count()):
-            process = Process(target=receive_message, args=(,))
+            process = Process(target=receive_message, args=(memory_shared,))
             processors.append(Process)
             Process.start()
 
