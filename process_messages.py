@@ -14,11 +14,18 @@ from random import randint
 
 lock = Lock()
 print("Esta es la cantidad de cpu's que tengo {}".format(cpu_count()))
+list_vals = [randint(1, 25) for _ in range(10)]
+print(list_vals)
+
+sum_array = 0
+
 
 def add_one(shr_name):
-
+    global sum_array
     existing_shm = shared_memory.SharedMemory(name=shr_name)
     np_array = np.ndarray((5000, 5000), dtype=np.int64, buffer=existing_shm.buf)
+    for x in list_vals:
+        sum_array += x
     lock.acquire()
     np_array[:] = np_array[0] + 1
     lock.release()
@@ -28,12 +35,13 @@ def add_one(shr_name):
     print(os.getpid())
     time.sleep(3)
     print("Added one")
+    time.sleep(3)
+    print("suma de las 10 posiciones: ", sum_array)
     existing_shm.close()
 
 def create_shared_block():
 
-    list_vals = [randint(1, 25) for _ in range(10)]
-    print(list_vals)
+    
     a= np.ones(shape=(5000, 5000), dtype=np.int64) # start with an existing numpy
 
     # a.bytes is integer type
@@ -61,9 +69,9 @@ def main():
         for _process in processes:
             _process.join()
 
-        print("Final array")
-        print(np_array[:10])
-        print(np_array[10:])
+        # print("Final array")
+        # print(np_array[:10])
+        # print(np_array[10:])
 
         shr.close()
         shr.unlink()
