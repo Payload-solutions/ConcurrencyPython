@@ -12,6 +12,7 @@ rx = "*"
 ray = "*"
 dask = "*"
 requests = "*"
+stable-baselines = "*"
 
 [dev-packages]
 
