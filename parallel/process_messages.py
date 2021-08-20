@@ -39,7 +39,7 @@ print(list_vals)
 sum_array = 0
 
 
-def add_one(shr_name):
+def sum_vector(shr_name):
     global sum_array
     existing_shm = shared_memory.SharedMemory(name=shr_name)
     for x in list_vals:
@@ -50,7 +50,7 @@ def add_one(shr_name):
     # time.sleep(5)
     print("Este es el procesador actual: ", current_process().name)
     time.sleep(3)
-    print(os.getpid())
+    print("id del proceso donde se ejecuta: ", os.getpid())
     time.sleep(3)
     print("suma: ", sum_array)
     time.sleep(3)
@@ -58,27 +58,20 @@ def add_one(shr_name):
     existing_shm.close()
 
 def create_shared_block():
-
-    
-    a= np.ones(shape=(5000, 5000), dtype=np.int64) # start with an existing numpy
-
-    # a.bytes is integer type
-    # here indicate to SharedMenory class, how much is the size to pass
-    shm = shared_memory.SharedMemory(create=True, size=a.nbytes)
+    shm = shared_memory.SharedMemory(create=True, size=20)
 
     return shm
-
 
 def main():
 
     if current_process().name == "MainProcess":
-        print("Creating shared block")
+        print("Creado bloque compartido...")
         shr = create_shared_block()
 
         processes = list()
 
         for _ in range(cpu_count()):
-            _process = Process(target=add_one, args=(shr.name, ))
+            _process = Process(target=sum_vector, args=(shr.name, ))
             processes.append(_process)
             _process.start()
 
