@@ -30,12 +30,11 @@ print("""
         Puente Joselyn
 """)
 
-
 lock = Lock()
-print("Esta es la cantidad de cpu's que tengo {}".format(cpu_count()))
+print("El computador cuenta con {} cores o CPUs".format(cpu_count()))
 list_vals = [randint(1, 25) for _ in range(10)]
 print(list_vals)
-
+print("La suma de las 10 posiciones del vector es: {}".format(sum(list_vals)))
 sum_array = 0
 
 
