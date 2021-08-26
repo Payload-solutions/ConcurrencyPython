@@ -45,7 +45,6 @@ def sum_vector(shr_name):
     for x in list_vals:
         sum_array += x
     lock.acquire()
-    # np_array[:] = np_array[0] + 1
     lock.release()
     # time.sleep(5)
     print("Este es el procesador actual: ", current_process().name)
